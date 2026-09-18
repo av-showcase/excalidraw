@@ -1,6 +1,6 @@
 import {
   assertNever,
-  COLOR_PALETTE,
+  DEFAULT_CANVAS_BACKGROUND,
   isDevEnv,
   isTestEnv,
   randomId,
@@ -993,7 +993,7 @@ const getDefaultObservedAppState = (): ObservedAppState => {
   return {
     name: null,
     editingGroupId: null,
-    viewBackgroundColor: COLOR_PALETTE.white,
+    viewBackgroundColor: DEFAULT_CANVAS_BACKGROUND,
     selectedElementIds: {},
     selectedGroupIds: {},
     selectedLinearElement: null,

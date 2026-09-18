@@ -280,13 +280,15 @@ export const STICKY_NOTE_BACKGROUND_PICKS = [
   COLOR_PALETTE.orange[1],
 ] as ColorTuple;
 
+// kept in the picks below so the picker shows the default as selected
+export const DEFAULT_CANVAS_BACKGROUND = COLOR_PALETTE.blue[0];
+
 // ORDER matters for positioning in quick picker
 export const DEFAULT_CANVAS_BACKGROUND_PICKS = [
   COLOR_PALETTE.white,
   // radix slate2
   "#f8f9fa",
-  // radix blue2
-  "#f5faff",
+  DEFAULT_CANVAS_BACKGROUND,
   // radix yellow2
   "#fffce8",
   // radix bronze2
