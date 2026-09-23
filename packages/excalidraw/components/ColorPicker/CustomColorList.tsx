@@ -17,6 +17,7 @@ interface CustomColorListProps {
   color: string | null;
   onChange: (color: string) => void;
   label: string;
+  showHotKey?: boolean;
 }
 
 export const CustomColorList = ({
@@ -25,6 +26,7 @@ export const CustomColorList = ({
   color,
   onChange,
   label,
+  showHotKey = true,
 }: CustomColorListProps) => {
   const [activeColorPickerSection, setActiveColorPickerSection] = useAtom(
     activeColorPickerSectionAtom,
@@ -68,7 +70,9 @@ export const CustomColorList = ({
             key={i}
           >
             <div className="color-picker__button-outline" />
-            <HotkeyLabel color={displayColor} keyLabel={i + 1} />
+            {showHotKey && (
+              <HotkeyLabel color={displayColor} keyLabel={i + 1} />
+            )}
           </button>
         );
       })}

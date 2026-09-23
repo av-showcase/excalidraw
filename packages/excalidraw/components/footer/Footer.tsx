@@ -2,6 +2,7 @@ import clsx from "clsx";
 
 import { actionShortcuts } from "../../actions";
 import { useTunnels } from "../../context/tunnels";
+import { t } from "../../i18n";
 import { ExitZenModeButton, UndoRedoActions, ZoomActions } from "../Actions";
 import { useApp } from "../App";
 import { HelpButton } from "../HelpButton";
@@ -28,6 +29,7 @@ const Footer = ({
 }) => {
   const { FooterCenterTunnel, WelcomeScreenHelpHintTunnel } = useTunnels();
   const app = useApp();
+  const selectedCount = Object.keys(appState.selectedElementIds).length;
 
   return (
     <footer
@@ -58,6 +60,16 @@ const Footer = ({
                       appState.zenModeEnabled,
                   })}
                 />
+              )}
+
+              {defaultUIEnabled && selectedCount > 0 && (
+                <div
+                  className="selection-count-badge"
+                  data-testid="selection-count-badge"
+                  aria-live="polite"
+                >
+                  {t("labels.selectedCount", { count: selectedCount })}
+                </div>
               )}
             </Section>
           </Stack.Col>

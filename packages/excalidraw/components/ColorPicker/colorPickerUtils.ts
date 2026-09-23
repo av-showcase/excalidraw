@@ -105,3 +105,16 @@ export type ColorPickerType =
   | "canvasBackground"
   | "elementBackground"
   | "elementStroke";
+
+export const MAX_RECENT_COLORS = 5;
+
+/** last picked colors per picker, most recent first (per editor instance) */
+export const recentColorsAtom = atom<
+  Record<"elementBackground" | "elementStroke", string[]>
+>({ elementBackground: [], elementStroke: [] });
+
+export const addRecentColor = (recentColors: string[], color: string) =>
+  [color, ...recentColors.filter((c) => c !== color)].slice(
+    0,
+    MAX_RECENT_COLORS,
+  );

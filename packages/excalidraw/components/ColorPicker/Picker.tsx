@@ -12,7 +12,7 @@ import type { ExcalidrawElement, Theme } from "@excalidraw/element/types";
 
 import type { ColorPaletteCustom } from "@excalidraw/common";
 
-import { useAtom } from "../../editor-jotai";
+import { useAtom, useAtomValue } from "../../editor-jotai";
 import { t } from "../../i18n";
 
 import { CustomColorList } from "./CustomColorList";
@@ -24,6 +24,7 @@ import {
   getColorNameAndShadeFromColor,
   getMostUsedCustomColors,
   isCustomColor,
+  recentColorsAtom,
 } from "./colorPickerUtils";
 import { colorPickerKeyNavHandler } from "./keyboardNavHandlers";
 import { useColorPickerDnD } from "./topPicksDnD";
@@ -79,6 +80,12 @@ export const Picker = React.forwardRef(
       }
       return getMostUsedCustomColors(elements, type, palette);
     });
+
+    // snapshot on open so swatches don't reorder under the cursor
+    const allRecentColors = useAtomValue(recentColorsAtom);
+    const [recentColors] = React.useState(() =>
+      type === "canvasBackground" ? [] : allRecentColors[type],
+    );
 
     const [activeColorPickerSection, setActiveColorPickerSection] = useAtom(
       activeColorPickerSectionAtom,
@@ -174,6 +181,20 @@ export const Picker = React.forwardRef(
           tabIndex={-1}
         >
           {title && <div className="color-picker__title">{title}</div>}
+
+          {!!recentColors.length && (
+            <div data-testid="color-picker-recent-colors">
+              <PickerHeading>{t("colorPicker.recentColors")}</PickerHeading>
+              <CustomColorList
+                theme={theme}
+                colors={recentColors}
+                color={color}
+                label={t("colorPicker.recentColors")}
+                onChange={onChange}
+                showHotKey={false}
+              />
+            </div>
+          )}
 
           {!!customColors.length && (
             <div>
