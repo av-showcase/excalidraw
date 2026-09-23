@@ -468,6 +468,7 @@ export interface AppState {
     | "compactStrokeStyles"
     | "compactOtherProperties"
     | "compactArrowProperties"
+    | "mathSymbols"
     | null;
   openSidebar: { name: SidebarName; tab?: SidebarTabName } | null;
   openDialog:
@@ -1180,6 +1181,7 @@ export type AppClassProperties = {
   onMagicframeToolSelect: App["onMagicframeToolSelect"];
   getName: App["getName"];
   dismissLinearEditor: App["dismissLinearEditor"];
+  startTextEditing: App["startTextEditing"];
   flowchart: App["flowchart"];
   drawShape: App["drawShape"];
   arrowText: App["arrowText"];

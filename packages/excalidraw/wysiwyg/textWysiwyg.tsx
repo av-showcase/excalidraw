@@ -72,6 +72,8 @@ import {
   actionZoomOut,
 } from "../actions/actionCanvas";
 
+import { MathAutocomplete } from "../components/MathSymbolPicker/mathAutocomplete";
+
 import type { ParsedDataTranferList } from "../clipboard";
 
 import type App from "../components/App";
@@ -450,6 +452,7 @@ export const textWysiwyg = ({
   };
 
   const editable = ownerDocument.createElement("textarea");
+  const mathAutocomplete = new MathAutocomplete(editable, ownerDocument);
 
   editable.dir = "auto";
   editable.tabIndex = 0;
@@ -656,10 +659,14 @@ export const textWysiwyg = ({
         editable.selectionEnd = selectionStart;
       }
       onChange(editable.value);
+      mathAutocomplete.handleInput();
     };
   }
 
   editable.onkeydown = (event) => {
+    if (mathAutocomplete.handleKeyDown(event)) {
+      return;
+    }
     if (!event.shiftKey && actionZoomIn.keyTest(event)) {
       event.preventDefault();
       app.actionManager.executeAction(actionZoomIn);
@@ -872,6 +879,7 @@ export const textWysiwyg = ({
   };
 
   const cleanup = () => {
+    mathAutocomplete.destroy();
     // remove events to ensure they don't late-fire
     editable.onblur = null;
     editable.oninput = null;
