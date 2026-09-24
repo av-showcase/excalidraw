@@ -10,6 +10,7 @@
     "chartType_radar": "Radar chart",
     "chartType_plaintext": "Plain text",
     "selectAll": "Select all",
+    "selectedCount": "{{count}} selected",
     "multiSelect": "Add element to selection",
     "moveCanvas": "Move canvas",
     "cut": "Cut",
@@ -617,6 +618,7 @@
   "colorPicker": {
     "color": "Color",
     "mostUsedCustomColors": "Most used custom colors",
+    "recentColors": "Recent colors",
     "colors": "Colors",
     "shades": "Shades",
     "hexCode": "Hex code",

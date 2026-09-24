@@ -17,7 +17,7 @@ import type { ColorTuple, ColorPaletteCustom } from "@excalidraw/common";
 
 import type { ExcalidrawElement, Theme } from "@excalidraw/element/types";
 
-import { useAtom } from "../../editor-jotai";
+import { useAtom, useSetAtom } from "../../editor-jotai";
 import { t } from "../../i18n";
 import { useApp, useExcalidrawContainer, useStylesPanelMode } from "../App";
 import { ButtonSeparator } from "../ButtonSeparator";
@@ -34,7 +34,11 @@ import { ColorInput } from "./ColorInput";
 import { Picker } from "./Picker";
 import PickerHeading from "./PickerHeading";
 import { TopPicks } from "./TopPicks";
-import { activeColorPickerSectionAtom } from "./colorPickerUtils";
+import {
+  activeColorPickerSectionAtom,
+  addRecentColor,
+  recentColorsAtom,
+} from "./colorPickerUtils";
 import {
   ColorPickerDnDContext,
   useColorPickerDnD,
@@ -365,6 +369,17 @@ const ColorPickerComponent = ({
 
   const isTopPicksCustomizable = !!customizableTopPicks && !isCompactMode;
 
+  const setRecentColors = useSetAtom(recentColorsAtom);
+  const handleChange = (pickedColor: string) => {
+    onChange(pickedColor);
+    if (type !== "canvasBackground") {
+      setRecentColors((prev) => ({
+        ...prev,
+        [type]: addRecentColor(prev[type], pickedColor),
+      }));
+    }
+  };
+
   // user-pinned picks trump the (host-provided or default) baseline
   const customTopPicks =
     isTopPicksCustomizable && customizableTopPicks
@@ -412,7 +427,7 @@ const ColorPickerComponent = ({
             theme={appState.theme}
             activeColor={color}
             onChange={(pickedColor) => {
-              onChange(pickedColor);
+              handleChange(pickedColor);
               // if another color-picker popup is open, follow the user's
               // focus over to this picker (same as clicking its trigger)
               if (
@@ -477,7 +492,7 @@ const ColorPickerComponent = ({
             <ColorPickerPopupContent
               type={type}
               color={color}
-              onChange={onChange}
+              onChange={handleChange}
               label={label}
               elements={elements}
               palette={palette}

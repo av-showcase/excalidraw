@@ -645,6 +645,20 @@ body.excalidraw-cursor-resize * {
     margin-inline-start: 0.6em;
   }
 
+  .selection-count-badge {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-inline-start: 0.6em;
+    padding: 0.25rem 0.625rem;
+    border-radius: var(--border-radius-lg);
+    background-color: var(--color-surface-primary-container);
+    color: var(--color-on-primary-container);
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+    user-select: none;
+  }
+
   @include isMobile {
     aside {
       display: none;
