@@ -10517,6 +10517,7 @@ class App extends React.Component<AppProps, AppState> {
       element = newStickyNoteElement({
         type: "stickynote",
         ...baseElementAttributes,
+        stickyShape: this.state.currentItemStickyShape,
       });
     } else {
       element = newElement({
